@@ -5,12 +5,31 @@ import { profile } from "../data/profile";
 import { SectionHeading } from "./About";
 
 export default function Contact() {
-  const [status, setStatus] = useState<"idle" | "sent">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // TODO: hubungkan ke EmailJS / Formspree — lihat komentar di bawah.
-    setStatus("sent");
+    setStatus("loading");
+    
+    const formData = new FormData(e.currentTarget);
+    
+    // GANTI URL DI BAWAH DENGAN URL FORMSPREE ANDA
+    fetch("https://formspree.io/f/GANTI_DENGAN_ID_ANDA", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          setStatus("sent");
+          (e.target as HTMLFormElement).reset();
+        } else {
+          setStatus("error");
+        }
+      })
+      .catch(() => setStatus("error"));
   }
 
   return (
@@ -74,6 +93,7 @@ export default function Contact() {
               </label>
               <textarea
                 id="message"
+                name="message"
                 required
                 rows={5}
                 className="w-full bg-transparent border border-blueprint-line/40 focus:border-pencil outline-none px-3 py-2 text-sm text-blueprint-900 dark:text-blueprint-paper resize-none"
@@ -81,13 +101,19 @@ export default function Contact() {
             </div>
             <button
               type="submit"
-              className="px-6 py-3 bg-pencil text-blueprint-950 font-mono text-sm font-medium hover:bg-pencil-soft transition-colors"
+              disabled={status === "loading"}
+              className="px-6 py-3 bg-pencil text-blueprint-950 font-mono text-sm font-medium hover:bg-pencil-soft transition-colors disabled:opacity-50"
             >
-              Kirim Pesan
+              {status === "loading" ? "Mengirim..." : "Kirim Pesan"}
             </button>
             {status === "sent" && (
-              <p className="font-mono text-xs text-pencil">
-                Pesan tersimpan secara lokal — hubungkan form ini ke EmailJS/Formspree agar benar-benar terkirim.
+              <p className="font-mono text-xs text-green-500">
+                Pesan berhasil terkirim! Terima kasih telah menghubungi saya.
+              </p>
+            )}
+            {status === "error" && (
+              <p className="font-mono text-xs text-red-500">
+                Gagal mengirim pesan. Pastikan Anda sudah mengganti URL Formspree di kode.
               </p>
             )}
           </motion.form>
@@ -105,6 +131,7 @@ function Field({ label, id, type, required }: { label: string; id: string; type:
       </label>
       <input
         id={id}
+        name={id}
         type={type}
         required={required}
         className="w-full bg-transparent border border-blueprint-line/40 focus:border-pencil outline-none px-3 py-2 text-sm text-blueprint-900 dark:text-blueprint-paper"

@@ -6,7 +6,7 @@ export default function About() {
   return (
     <section id="about" className="bg-blueprint-paper dark:bg-blueprint-900 py-24">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <SectionHeading eyebrow="Sheet 02" title="Perjalanan" />
+        <SectionHeading eyebrow="Sheet 02" title="My History" />
 
         <div className="grid md:grid-cols-[0.9fr_1.1fr] gap-12">
           {/* Data diri */}
