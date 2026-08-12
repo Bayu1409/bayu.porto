@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-body bg-blueprint-900 text-blueprint-paper transition-colors duration-300;
+  }
+  .light body,
+  html:not(.dark) body {
+    @apply bg-blueprint-paper text-blueprint-900;
+  }
+  ::selection {
+    @apply bg-pencil text-blueprint-950;
+  }
+  *:focus-visible {
+    outline: 2px solid #FF6B35;
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  .bg-blueprint-grid {
+    background-image: linear-gradient(rgba(94,133,172,0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(94,133,172,0.15) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .sheet-corner {
+    position: relative;
+  }
+  .sheet-corner::before,
+  .sheet-corner::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: currentColor;
+  }
+  .sheet-corner::before {
+    top: 0; left: 0;
+    border-top: 2px solid;
+    border-left: 2px solid;
+  }
+  .sheet-corner::after {
+    bottom: 0; right: 0;
+    border-bottom: 2px solid;
+    border-right: 2px solid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
