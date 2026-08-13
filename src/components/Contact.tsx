@@ -1,141 +1,84 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { FiGithub, FiLinkedin, FiInstagram, FiMail, FiDownload } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiInstagram, FiMail, FiMapPin } from "react-icons/fi";
 import { profile } from "../data/profile";
 import { SectionHeading } from "./About";
 
 export default function Contact() {
-  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setStatus("loading");
-    
-    const formData = new FormData(e.currentTarget);
-    
-    // GANTI URL DI BAWAH DENGAN URL FORMSPREE ANDA
-    fetch("https://formspree.io/f/GANTI_DENGAN_ID_ANDA", {
-      method: "POST",
-      body: formData,
-      headers: {
-        Accept: "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          setStatus("sent");
-          (e.target as HTMLFormElement).reset();
-        } else {
-          setStatus("error");
-        }
-      })
-      .catch(() => setStatus("error"));
-  }
-
   return (
     <section id="contact" className="bg-blueprint-paper dark:bg-blueprint-900 py-24 bg-blueprint-grid">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <SectionHeading eyebrow="Sheet 07" title="Mari Berkolaborasi" />
 
-        <div className="grid md:grid-cols-[0.9fr_1.1fr] gap-12">
+        <div className="grid md:grid-cols-[1fr_1fr] gap-12 items-start mt-8">
           <motion.div
             initial={{ opacity: 0, x: -16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-blueprint-900/75 dark:text-blueprint-paper/75 leading-relaxed mb-6">
-              Punya proyek, ide, atau sekadar ingin berdiskusi soal web development? Kirim pesan lewat form,
-              atau hubungi langsung lewat email di bawah.
+            <h3 className="font-display font-semibold text-2xl text-blueprint-900 dark:text-blueprint-paper mb-4">
+              Mulai Sesuatu yang Hebat
+            </h3>
+            <p className="text-blueprint-900/75 dark:text-blueprint-paper/75 leading-relaxed mb-6 text-lg">
+              Punya proyek, ide brilian, atau sekadar ingin berdiskusi soal web development?
+              Jangan ragu untuk menghubungi saya. Saya selalu terbuka untuk mengeksplorasi peluang
+              kolaborasi baru dan membantu mewujudkan ide Anda menjadi produk digital.
             </p>
-
-            <a
-              href={`mailto:${profile.email}`}
-              className="flex items-center gap-3 font-mono text-sm text-blueprint-900 dark:text-blueprint-paper hover:text-pencil transition-colors mb-6"
-            >
-              <FiMail /> {profile.email}
-            </a>
-
-            <a
-              href="/cv.pdf"
-              download
-              className="inline-flex items-center gap-2 px-5 py-2.5 border border-blueprint-900/40 dark:border-blueprint-paper/40 font-mono text-xs text-blueprint-900 dark:text-blueprint-paper hover:border-pencil hover:text-pencil transition-colors mb-8"
-            >
-              <FiDownload /> Unduh CV
-            </a>
-
-            <div className="flex gap-4">
-              <a href={profile.socials.github} aria-label="GitHub" className="w-10 h-10 grid place-items-center border border-blueprint-line/40 text-blueprint-900 dark:text-blueprint-paper hover:border-pencil hover:text-pencil transition-colors">
-                <FiGithub />
-              </a>
-              <a href={profile.socials.linkedin} aria-label="LinkedIn" className="w-10 h-10 grid place-items-center border border-blueprint-line/40 text-blueprint-900 dark:text-blueprint-paper hover:border-pencil hover:text-pencil transition-colors">
-                <FiLinkedin />
-              </a>
-              <a href={profile.socials.instagram} aria-label="Instagram" className="w-10 h-10 grid place-items-center border border-blueprint-line/40 text-blueprint-900 dark:text-blueprint-paper hover:border-pencil hover:text-pencil transition-colors">
-                <FiInstagram />
-              </a>
-            </div>
+            <p className="text-blueprint-900/75 dark:text-blueprint-paper/75 leading-relaxed text-lg">
+              Kotak masuk saya selalu terbuka. Apakah Anda punya pertanyaan, mencari partner diskusi,
+              atau sekadar menyapa, saya akan berusaha sebaik mungkin untuk membalasnya!
+            </p>
           </motion.div>
 
-          <motion.form
+          <motion.div
             initial={{ opacity: 0, x: 16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6 }}
-            onSubmit={handleSubmit}
-            className="border border-blueprint-line/40 p-6 space-y-4"
+            className="sheet-corner border border-blueprint-line/40 p-8 h-fit relative bg-blueprint-paper/50 dark:bg-blueprint-900/50 backdrop-blur-sm"
           >
-            <Field label="Nama" id="name" type="text" required />
-            <Field label="Email" id="email" type="email" required />
-            <div>
-              <label htmlFor="message" className="font-mono text-xs uppercase tracking-widest text-pencil block mb-2">
-                Pesan
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                rows={5}
-                className="w-full bg-transparent border border-blueprint-line/40 focus:border-pencil outline-none px-3 py-2 text-sm text-blueprint-900 dark:text-blueprint-paper resize-none"
-              />
+            <p className="font-mono text-xs uppercase tracking-widest text-pencil mb-6">Info Kontak</p>
+
+            <div className="space-y-6 mb-10">
+              <a
+                href={`mailto:${profile.email}`}
+                className="flex items-center gap-4 group"
+              >
+                <div className="w-12 h-12 rounded-full border border-blueprint-line/40 grid place-items-center text-blueprint-900 dark:text-blueprint-paper group-hover:border-pencil group-hover:text-pencil transition-all">
+                  <FiMail className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="font-mono text-xs opacity-60 text-blueprint-900 dark:text-blueprint-paper mb-1">Email</p>
+                  <p className="font-medium text-blueprint-900 dark:text-blueprint-paper group-hover:text-pencil transition-colors">{profile.email}</p>
+                </div>
+              </a>
+
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full border border-blueprint-line/40 grid place-items-center text-blueprint-900 dark:text-blueprint-paper">
+                  <FiMapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="font-mono text-xs opacity-60 text-blueprint-900 dark:text-blueprint-paper mb-1">Domisili</p>
+                  <p className="font-medium text-blueprint-900 dark:text-blueprint-paper">{profile.domicile}</p>
+                </div>
+              </div>
             </div>
-            <button
-              type="submit"
-              disabled={status === "loading"}
-              className="px-6 py-3 bg-pencil text-blueprint-950 font-mono text-sm font-medium hover:bg-pencil-soft transition-colors disabled:opacity-50"
-            >
-              {status === "loading" ? "Mengirim..." : "Kirim Pesan"}
-            </button>
-            {status === "sent" && (
-              <p className="font-mono text-xs text-green-500">
-                Pesan berhasil terkirim! Terima kasih telah menghubungi saya.
-              </p>
-            )}
-            {status === "error" && (
-              <p className="font-mono text-xs text-red-500">
-                Gagal mengirim pesan. Pastikan Anda sudah mengganti URL Formspree di kode.
-              </p>
-            )}
-          </motion.form>
+
+            <p className="font-mono text-xs uppercase tracking-widest text-pencil mb-4">Media Sosial</p>
+            <div className="flex gap-4">
+              <a href={profile.socials.github} aria-label="GitHub" className="w-12 h-12 text-lg grid place-items-center border border-blueprint-line/40 rounded-full text-blueprint-900 dark:text-blueprint-paper hover:border-pencil hover:text-pencil hover:-translate-y-1 transition-all">
+                <FiGithub />
+              </a>
+              <a href={profile.socials.linkedin} aria-label="LinkedIn" className="w-12 h-12 text-lg grid place-items-center border border-blueprint-line/40 rounded-full text-blueprint-900 dark:text-blueprint-paper hover:border-pencil hover:text-pencil hover:-translate-y-1 transition-all">
+                <FiLinkedin />
+              </a>
+              <a href={profile.socials.instagram} aria-label="Instagram" className="w-12 h-12 text-lg grid place-items-center border border-blueprint-line/40 rounded-full text-blueprint-900 dark:text-blueprint-paper hover:border-pencil hover:text-pencil hover:-translate-y-1 transition-all">
+                <FiInstagram />
+              </a>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
-  );
-}
-
-function Field({ label, id, type, required }: { label: string; id: string; type: string; required?: boolean }) {
-  return (
-    <div>
-      <label htmlFor={id} className="font-mono text-xs uppercase tracking-widest text-pencil block mb-2">
-        {label}
-      </label>
-      <input
-        id={id}
-        name={id}
-        type={type}
-        required={required}
-        className="w-full bg-transparent border border-blueprint-line/40 focus:border-pencil outline-none px-3 py-2 text-sm text-blueprint-900 dark:text-blueprint-paper"
-      />
-    </div>
   );
 }

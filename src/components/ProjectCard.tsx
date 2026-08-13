@@ -73,15 +73,7 @@ export default function ProjectCard({ project, index }: { project: Project; inde
           </li>
         </ul>
 
-        {/* Bottom Button */}
-        <div className="mt-auto">
-          <a
-            href={project.demoUrl || project.repoUrl || "#"}
-            className={`block w-full text-center py-4 rounded-xl font-bold text-white text-sm tracking-wide ${theme.main} hover:opacity-90 transition-opacity`}
-          >
-            LIHAT DETAIL
-          </a>
-        </div>
+
       </div>
     </motion.article>
   );
